@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 
 /**
@@ -22,6 +23,7 @@ public class NavigationIconClickListener implements View.OnClickListener {
     private View sheet;
     private Interpolator interpolator;
     private int height;
+    private int width;
     private boolean backdropShown = false;
     private Drawable openIcon;
     private Drawable closeIcon;
@@ -46,6 +48,7 @@ public class NavigationIconClickListener implements View.OnClickListener {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         height = displayMetrics.heightPixels;
+        width = displayMetrics.widthPixels;
     }
 
     @Override
@@ -59,10 +62,15 @@ public class NavigationIconClickListener implements View.OnClickListener {
 
         updateIcon(view);
 
-        final int translateY = height -
-                context.getResources().getDimensionPixelSize(R.dimen.shr_product_grid_reveal_height);
+        // Navigation vertical transition
+//        final int translateY = height -
+//                context.getResources().getDimensionPixelSize(R.dimen.shr_product_grid_reveal_height);
+//        ObjectAnimator animator = ObjectAnimator.ofFloat(sheet, "translationY", backdropShown ? translateY : 0);
 
-        ObjectAnimator animator = ObjectAnimator.ofFloat(sheet, "translationY", backdropShown ? translateY : 0);
+        // Navigation horizontal transition
+        final int translateX = width;
+        ObjectAnimator animator = ObjectAnimator.ofFloat(sheet, "translationX", backdropShown ? translateX : 0);
+
         animator.setDuration(500);
         if (interpolator != null) {
             animator.setInterpolator(interpolator);
